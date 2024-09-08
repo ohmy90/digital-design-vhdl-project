@@ -1,0 +1,12 @@
+code execution for testbench:
+
+A port map is used to import project.vhd.
+Signals are assigned with signals from project.vhd
+
+Then, these signals are assigned values. We force the software to wait for 20ns for results.
+Repeat this for a number of scenarios to test the system.
+
+At the end, we use a variable error status to check if there is a problem.
+Since registers are used, there exits a very large amount of cases to consider (previous occupancy, new x, new y,etc.).
+Therefore, we check if reset works and if max amount people enter or leave the room.
+If expected result is not met, then there is an error.

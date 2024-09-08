@@ -1,0 +1,30 @@
+code execution for project.vhd:
+(starting from architecture)
+Signals are declared for temporary values.
+Outputs are assigned temporary values so that VHDL can use outputs as inputs for assignment
+
+For the process that contains clk and reset in it's list.
+Variables are declared to store values.
+if reset is 1, then values in registers are reset to their initial values.
+All vector operations are done using unsigned(vector)
+
+Otherwise, if there is a rising edge clock, then sum_temp and sub_temp are caluclated to hold values for if conditions.
+if z=1, then the value inside the current occupancy remains unchanged.
+
+Otherwise, if sum_temp is less than the max occupancy, then sum is calculated by adding the current occupancy and the signal x.
+Otherwise, if sum_temp is higher than the max, this would mean that x is a value higher than the current occupancy.
+Therefore, the sum is capped at 63, which is the limit.
+
+Next, there are many if conditions. if x is higher than y and the sub_temp is higher than 0, then calculated the sub and subtract sum with sub to obtain total.
+After obtaining the net number of people, add that with the previous number of current occupancy to update the current occupancy register.
+
+If y is higher than x, that would mean total would become a negative number (more people leave than enter).
+Therefore, subtract sub with sum to obtain the wanted positive number. The negative number cannot be used in this process.
+The previous number of people is then substracted by the total, since total now represents a negative number.
+
+Otherwise if both conditions above are not met. Then that would mean Y is a bigger number than the current occupancy (which is not possible).
+As such, sub is 0000000. The total becomes the sum. Then the register is updated with the previous occupancy and the total.
+
+For the process with current occupancy and max occupancy in its sensitivity list:
+if the occupancies are equal, then z is set to 1.
+Otherwise, it is 0.
